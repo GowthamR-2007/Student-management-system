@@ -1,116 +1,2148 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StudentHub — Student Management</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>StudentHub | Student Management</title>
+
+<style>
+
+/* ==============================
+   GLOBAL
+================================ */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6fb;
+    color: #181b25;
+}
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+
+/* ==============================
+   LAYOUT
+================================ */
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* ==============================
+   SIDEBAR
+================================ */
+
+.sidebar {
+    width: 250px;
+    background: #10131b;
+    color: #aeb4c2;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding: 25px 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* LOGO */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 8px 30px;
+}
+
+.logo-box {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 12px;
+
+    display: grid;
+    place-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7657f5,
+            #28bde9
+        );
+
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.logo h2 {
+    color: white;
+    font-size: 16px;
+}
+
+.logo span {
+    font-size: 9px;
+    color: #707788;
+}
+
+
+/* NAVIGATION */
+
+.menu-title {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: #5d6472;
+
+    margin: 20px 10px 8px;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 12px 14px;
+
+    margin: 4px 0;
+
+    border-radius: 9px;
+
+    color: #9097a7;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.menu:hover,
+.menu.active {
+    background: #1d2330;
+    color: white;
+}
+
+.menu.active {
+    box-shadow:
+        inset 3px 0 #7657f5;
+}
+
+
+/* SIDEBAR PROFILE */
+
+.sidebar-bottom {
+    margin-top: auto;
+
+    border-top:
+        1px solid #252a35;
+
+    padding-top: 18px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 15px;
+}
+
+.profile-img {
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+
+    display: grid;
+    place-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7657f5,
+            #28bde9
+        );
+
+    color: white;
+
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.profile strong,
+.profile small {
+    display: block;
+}
+
+.profile strong {
+    font-size: 11px;
+    color: white;
+}
+
+.profile small {
+    font-size: 9px;
+    color: #707788;
+    margin-top: 3px;
+}
+
+.theme-button {
+    width: 100%;
+
+    padding: 10px;
+
+    border-radius: 9px;
+
+    border:
+        1px solid #292f3b;
+
+    background: #191e28;
+
+    color: #aeb4c2;
+
+    cursor: pointer;
+}
+
+
+/* ==============================
+   MAIN
+================================ */
+
+.main {
+    margin-left: 250px;
+
+    width:
+        calc(100% - 250px);
+
+    padding:
+        30px 42px;
+}
+
+
+/* ==============================
+   TOPBAR
+================================ */
+
+.topbar {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+.small-title {
+    color: #7d8493;
+
+    font-size: 9px;
+
+    letter-spacing: 1.6px;
+
+    font-weight: bold;
+
+    margin-bottom: 6px;
+}
+
+.topbar h1 {
+    font-size: 25px;
+}
+
+.topbar h1 span {
+    color: #7657f5;
+}
+
+
+/* TOP RIGHT */
+
+.top-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.search {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    height: 40px;
+
+    padding: 0 12px;
+
+    background: white;
+
+    border:
+        1px solid #e3e6ed;
+
+    border-radius: 10px;
+}
+
+.search input {
+    width: 180px;
+
+    border: 0;
+
+    outline: 0;
+
+    font-size: 11px;
+}
+
+.notification {
+    width: 40px;
+    height: 40px;
+
+    background: white;
+
+    border:
+        1px solid #e3e6ed;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    display: grid;
+
+    place-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7657f5,
+            #28bde9
+        );
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+
+/* ==============================
+   HERO
+================================ */
+
+.hero {
+    margin-top: 28px;
+
+    min-height: 210px;
+
+    padding:
+        30px 34px;
+
+    border-radius: 18px;
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    background:
+        linear-gradient(
+            120deg,
+            #171b27,
+            #292341
+        );
+
+    color: white;
+
+    overflow: hidden;
+
+    position: relative;
+}
+
+.hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    right: 8%;
+    top: -180px;
+
+    background:
+        rgba(
+            124,
+            92,
+            255,
+            0.25
+        );
+}
+
+.live {
+    font-size: 9px;
+
+    color: #62d9ff;
+
+    background:
+        rgba(
+            43,
+            199,
+            255,
+            .1
+        );
+
+    border:
+        1px solid
+        rgba(
+            43,
+            199,
+            255,
+            .2
+        );
+
+    padding: 6px 9px;
+
+    border-radius: 20px;
+}
+
+.hero h2 {
+    font-size: 29px;
+
+    line-height: 1.15;
+
+    margin:
+        14px 0 8px;
+}
+
+.hero p {
+    color: #aeb4c4;
+
+    font-size: 11px;
+}
+
+
+/* ==============================
+   BUTTON
+================================ */
+
+.primary-button {
+    border: 0;
+
+    padding:
+        12px 18px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7657f5,
+            #28bde9
+        );
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.primary-button:hover {
+    transform:
+        translateY(-2px);
+}
+
+
+/* ==============================
+   STATISTICS
+================================ */
+
+.stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+    margin: 20px 0;
+}
+
+.stat {
+    background: white;
+
+    border:
+        1px solid #e6e8ee;
+
+    border-radius: 14px;
+
+    padding: 19px;
+
+    min-height: 105px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+.stat-icon {
+    width: 43px;
+    height: 43px;
+
+    border-radius: 12px;
+
+    display: grid;
+
+    place-items: center;
+
+    font-size: 17px;
+}
+
+.purple {
+    background: #eeeaff;
+}
+
+.blue {
+    background: #e5f8ff;
+}
+
+.green {
+    background: #e6faf1;
+}
+
+.stat span {
+    color: #7d8493;
+
+    font-size: 10px;
+}
+
+.stat h2 {
+    margin: 5px 0;
+
+    font-size: 24px;
+}
+
+.stat small {
+    color: #9298a4;
+
+    font-size: 9px;
+}
+
+.dark-stat {
+    background:
+        linear-gradient(
+            135deg,
+            #252040,
+            #171927
+        );
+
+    color: white;
+
+    justify-content:
+        space-between;
+}
+
+.dark-stat span,
+.dark-stat small {
+    color: #a9a9bc;
+}
+
+.circle {
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    border:
+        6px solid #413b69;
+
+    border-top-color:
+        #2bc7ff;
+}
+
+
+/* ==============================
+   CONTENT
+================================ */
+
+.content {
+    background: white;
+
+    border:
+        1px solid #e6e8ee;
+
+    border-radius: 15px;
+
+    padding: 22px;
+
+    margin-bottom: 20px;
+}
+
+.section-header {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    font-size: 18px;
+}
+
+
+/* FILTER */
+
+.filters {
+    display: flex;
+
+    gap: 8px;
+}
+
+.filters select {
+    padding: 9px 12px;
+
+    border:
+        1px solid #e0e3ea;
+
+    border-radius: 9px;
+
+    background: white;
+
+    font-size: 10px;
+}
+
+
+/* ==============================
+   STUDENT CARDS
+================================ */
+
+.student-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 14px;
+}
+
+.student-card {
+    border:
+        1px solid #e6e8ee;
+
+    border-radius: 13px;
+
+    padding: 17px;
+
+    background:
+        linear-gradient(
+            145deg,
+            white,
+            #fafbfe
+        );
+
+    transition: .25s;
+}
+
+.student-card:hover {
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 14px 30px
+        rgba(
+            20,
+            30,
+            60,
+            .08
+        );
+
+    border-color:
+        #d6d0ff;
+}
+
+.student-top {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+}
+
+.student-avatar {
+    width: 45px;
+    height: 45px;
+
+    border-radius: 13px;
+
+    display: grid;
+
+    place-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ece8ff,
+            #d8f7ff
+        );
+
+    color: #5b4cc6;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.department {
+    font-size: 9px;
+
+    font-weight: bold;
+
+    padding: 5px 8px;
+
+    border-radius: 7px;
+
+    background: #f0edff;
+
+    color: #6553d5;
+}
+
+.student-card h3 {
+    font-size: 13px;
+
+    margin:
+        13px 0 4px;
+}
+
+.student-card p {
+    color: #858b98;
+
+    font-size: 10px;
+}
+
+.student-info {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    margin-top: 15px;
+
+    padding-top: 11px;
+
+    border-top:
+        1px solid #eef0f4;
+
+    color: #7a8190;
+
+    font-size: 9px;
+}
+
+
+/* CARD BUTTONS */
+
+.card-buttons {
+    display: flex;
+
+    gap: 7px;
+
+    margin-top: 13px;
+}
+
+.edit,
+.delete {
+    flex: 1;
+
+    padding: 8px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.edit {
+    background: white;
+
+    border:
+        1px solid #e0e3ea;
+}
+
+.delete {
+    background: white;
+
+    border:
+        1px solid #e0e3ea;
+}
+
+.edit:hover {
+    background: #f1eeff;
+
+    color: #654fd1;
+}
+
+.delete:hover {
+    background: #fff0f0;
+
+    color: #d83b3b;
+}
+
+
+/* ==============================
+   ADD FORM
+================================ */
+
+.crud-badge {
+    padding: 6px 9px;
+
+    border-radius: 7px;
+
+    background: #e8faf3;
+
+    color: #17845d;
+
+    font-size: 9px;
+
+    font-weight: bold;
+}
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 13px;
+}
+
+.form-group label {
+    display: block;
+
+    color: #646c7b;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+
+    padding: 11px;
+
+    border:
+        1px solid #e0e3ea;
+
+    border-radius: 9px;
+
+    background: #fbfcfe;
+
+    outline: none;
+
+    font-size: 11px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #7657f5;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            118,
+            87,
+            245,
+            .08
+        );
+}
+
+.form-buttons {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 18px;
+}
+
+.cancel-button {
+    padding:
+        11px 17px;
+
+    background: white;
+
+    border:
+        1px solid #dfe2e8;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+/* ==============================
+   FOOTER
+================================ */
+
+footer {
+    text-align: center;
+
+    padding: 12px;
+
+    color: #9298a4;
+
+    font-size: 9px;
+}
+
+
+/* ==============================
+   RESPONSIVE
+================================ */
+
+@media(max-width:1100px) {
+
+    .stats {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .student-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .form-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+
+@media(max-width:750px) {
+
+    .sidebar {
+        display: none;
+    }
+
+    .main {
+        margin-left: 0;
+
+        width: 100%;
+
+        padding: 20px;
+    }
+
+    .topbar {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .top-right {
+        width: 100%;
+    }
+
+    .search {
+        width: 100%;
+    }
+
+    .search input {
+        width: 100%;
+    }
+
+    .hero {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+    .stats,
+    .student-grid,
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 12px;
+    }
+
+    .filters {
+        width: 100%;
+    }
+
+    .filters select {
+        flex: 1;
+    }
+
+}
+
+</style>
 </head>
+
+
 <body>
-  <div class="app-shell">
-    <aside class="sidebar" id="sidebar">
-      <div class="brand">
-        <div class="brand-mark">S</div>
+
+
+<div class="app">
+
+
+<!-- =================================
+     SIDEBAR
+================================== -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-box">
+            S
+        </div>
+
         <div>
-          <strong>StudentHub</strong>
-          <span>Campus workspace</span>
+            <h2>
+                StudentHub
+            </h2>
+
+            <span>
+                Campus Workspace
+            </span>
         </div>
-      </div>
 
-      <nav>
-        <p class="nav-label">Workspace</p>
-        <a class="nav-item active" href="#dashboard"><span>⌂</span> Dashboard</a>
-        <a class="nav-item" href="#students"><span>◉</span> Students</a>
-        <a class="nav-item" href="#add"><span>＋</span> Add Student</a>
-        <a class="nav-item" href="#analytics"><span>▥</span> Analytics</a>
-        <p class="nav-label">System</p>
-        <a class="nav-item" href="#settings"><span>⚙</span> Settings</a>
-      </nav>
+    </div>
 
-      <div class="sidebar-footer">
-        <div class="mini-profile"><span>GR</span><div><b>Gowtham R</b><small>CSE Student</small></div></div>
-        <button class="theme-btn" id="themeBtn" title="Toggle theme">☼ <span>Theme</span></button>
-      </div>
-    </aside>
 
-    <main class="main">
-      <header class="topbar">
-        <button class="mobile-menu" id="mobileMenu">☰</button>
+    <nav>
+
+        <p class="menu-title">
+            MAIN MENU
+        </p>
+
+
+        <a
+            href="#"
+            class="menu active"
+        >
+            🏠
+            Dashboard
+        </a>
+
+
+        <a
+            href="#students"
+            class="menu"
+        >
+            👨‍🎓
+            Students
+        </a>
+
+
+        <a
+            href="#addStudent"
+            class="menu"
+        >
+            ＋
+            Add Student
+        </a>
+
+
+        <a
+            href="#analytics"
+            class="menu"
+        >
+            📊
+            Analytics
+        </a>
+
+
+        <p class="menu-title">
+            SYSTEM
+        </p>
+
+
+        <a
+            href="#"
+            class="menu"
+        >
+            ⚙️
+            Settings
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="profile">
+
+            <div class="profile-img">
+                GR
+            </div>
+
+            <div>
+
+                <strong>
+                    Gowtham R
+                </strong>
+
+                <small>
+                    CSE Student
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="theme-button"
+            onclick="changeTheme()"
+        >
+            ☼ &nbsp;
+            Change Theme
+        </button>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =================================
+     MAIN
+================================== -->
+
+<main class="main">
+
+
+<!-- TOP BAR -->
+
+<header class="topbar">
+
+    <div>
+
+        <p class="small-title">
+            STUDENT MANAGEMENT
+        </p>
+
+        <h1>
+            Good Evening, Gowtham
+            <span>✦</span>
+        </h1>
+
+    </div>
+
+
+    <div class="top-right">
+
+        <div class="search">
+
+            🔍
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search students..."
+            >
+
+        </div>
+
+
+        <button class="notification">
+            🔔
+        </button>
+
+
+        <div class="avatar">
+            GR
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div>
+
+        <span class="live">
+            ● LIVE DATABASE
+        </span>
+
+        <h2>
+            Your campus,<br>
+            organized.
+        </h2>
+
+        <p>
+            Manage student records with
+            a clean, fast and modern workspace.
+        </p>
+
+    </div>
+
+
+    <button
+        class="primary-button"
+        onclick="scrollToAdd()"
+    >
+        ＋ Add Student
+    </button>
+
+</section>
+
+
+
+<!-- STATISTICS -->
+
+<section
+    class="stats"
+    id="analytics"
+>
+
+
+    <div class="stat">
+
+        <div class="stat-icon purple">
+            👨‍🎓
+        </div>
+
         <div>
-          <p class="eyebrow">STUDENT MANAGEMENT</p>
-          <h1 id="dashboard">Good evening, Gowtham <span>✦</span></h1>
-        </div>
-        <div class="top-actions">
-          <div class="global-search"><span>⌕</span><input id="search" type="search" placeholder="Search students..."><kbd>⌘ K</kbd></div>
-          <button class="icon-btn" title="Notifications">♢<i></i></button>
-          <div class="top-avatar">GR</div>
-        </div>
-      </header>
 
-      <section class="hero">
+            <span>
+                Total Students
+            </span>
+
+            <h2 id="totalStudents">
+                3
+            </h2>
+
+            <small>
+                All records
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-icon blue">
+            💻
+        </div>
+
         <div>
-          <span class="pill">● Live database</span>
-          <h2>Your campus, organized.</h2>
-          <p>Manage student records with a clean, fast and modern workspace.</p>
-        </div>
-        <button class="gradient-btn" id="heroAdd">＋ Add Student</button>
-      </section>
 
-      <section class="stats" id="analytics">
-        <div class="stat-card">
-          <div class="stat-icon">◉</div><div><span>Total Students</span><strong id="totalCount">0</strong><small>All records</small></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">⌘</div><div><span>CSE Students</span><strong id="cseCount">0</strong><small>Computer Science</small></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">↗</div><div><span>Active Records</span><strong id="activeCount">0</strong><small>Currently enrolled</small></div>
-        </div>
-        <div class="stat-card accent-card">
-          <div><span>Departments</span><strong id="deptCount">0</strong><small>Across your database</small></div>
-          <div class="ring"></div>
-        </div>
-      </section>
+            <span>
+                CSE Students
+            </span>
 
-      <section class="content-card" id="students">
-        <div class="section-head">
-          <div><p class="eyebrow">DIRECTORY</p><h2>Student Records</h2></div>
-          <div class="filters">
-            <select id="departmentFilter"><option value="">All departments</option><option>CSE</option><option>ECE</option><option>EEE</option><option>MECH</option><option>CIVIL</option><option>IT</option></select>
-            <select id="yearFilter"><option value="">All years</option><option value="1">1st Year</option><option value="2">2nd Year</option><option value="3">3rd Year</option><option value="4">4th Year</option></select>
-          </div>
+            <h2 id="cseStudents">
+                2
+            </h2>
+
+            <small>
+                Computer Science
+            </small>
+
         </div>
-        <div class="student-grid" id="studentGrid"></div>
-      </section>
 
-      <section class="content-card add-section" id="add">
-        <div class="section-head">
-          <div><p class="eyebrow">QUICK ACTION</p><h2 id="formTitle">Add New Student</h2></div>
-          <span class="form-badge">CRUD enabled</span>
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-icon green">
+            📈
         </div>
-        <form id="studentForm">
-          <input type="hidden" id="studentId">
-          <div class="form-grid">
-            <label>Student Name<input id="name" type="text" placeholder="e.g. Arun Kumar" required></label>
-            <label>Email Address<input id="email" type="email" placeholder="student@example.com" required></label>
-            <label>Department<select id="department" required><option value="">Choose department</option><option>CSE</option><option>ECE</option><option>EEE</option><option>MECH</option><option>CIVIL</option><option>IT</option></select></label>
-            <label>Academic Year<select id="year" required><option value="">Choose year</option><option value="1">1st Year</option><option value="2">2nd Year</option><option value="3">3rd Year</option><option value="4">4th Year</option></select></label>
-          </div>
-          <div class="form-actions"><button class="gradient-btn" type="submit" id="saveBtn">＋ Add Student</button><button class="ghost-btn hidden" type="button" id="cancelBtn">Cancel</button></div>
-        </form>
-      </section>
 
-      <footer>StudentHub · CRUD Mini Web Application · Built with Flask + SQLite</footer>
-    </main>
-  </div>
+        <div>
 
-  <div class="modal hidden" id="deleteModal">
-    <div class="modal-box"><button class="close" id="closeModal">×</button><div class="warning-icon">!</div><h3>Delete student?</h3><p>This action will permanently remove the selected record.</p><div class="modal-actions"><button class="ghost-btn" id="keepBtn">Keep record</button><button class="delete-btn" id="confirmDelete">Delete</button></div></div>
-  </div>
-  <div class="toast" id="toast"></div>
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
+            <span>
+                Active Records
+            </span>
+
+            <h2 id="activeStudents">
+                3
+            </h2>
+
+            <small>
+                Currently enrolled
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat dark-stat">
+
+        <div>
+
+            <span>
+                Departments
+            </span>
+
+            <h2>
+                5
+            </h2>
+
+            <small>
+                Across database
+            </small>
+
+        </div>
+
+        <div class="circle"></div>
+
+    </div>
+
+</section>
+
+
+
+<!-- STUDENT RECORDS -->
+
+<section
+    class="content"
+    id="students"
+>
+
+
+    <div class="section-header">
+
+        <div>
+
+            <p class="small-title">
+                DIRECTORY
+            </p>
+
+            <h2>
+                Student Records
+            </h2>
+
+        </div>
+
+
+        <div class="filters">
+
+            <select id="departmentFilter">
+
+                <option value="">
+                    All Departments
+                </option>
+
+                <option value="CSE">
+                    CSE
+                </option>
+
+                <option value="ECE">
+                    ECE
+                </option>
+
+                <option value="EEE">
+                    EEE
+                </option>
+
+                <option value="IT">
+                    IT
+                </option>
+
+                <option value="MECH">
+                    MECH
+                </option>
+
+            </select>
+
+
+            <select id="yearFilter">
+
+                <option value="">
+                    All Years
+                </option>
+
+                <option value="1">
+                    1st Year
+                </option>
+
+                <option value="2">
+                    2nd Year
+                </option>
+
+                <option value="3">
+                    3rd Year
+                </option>
+
+                <option value="4">
+                    4th Year
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- STUDENT GRID -->
+
+    <div
+        class="student-grid"
+        id="studentGrid"
+    >
+
+
+        <!-- STUDENT 1 -->
+
+        <div
+            class="student-card"
+            data-name="Arun Kumar"
+            data-email="arun@example.com"
+            data-department="CSE"
+            data-year="2"
+        >
+
+            <div class="student-top">
+
+                <div class="student-avatar">
+                    AK
+                </div>
+
+                <span class="department">
+                    CSE
+                </span>
+
+            </div>
+
+
+            <h3>
+                Arun Kumar
+            </h3>
+
+            <p>
+                arun@example.com
+            </p>
+
+
+            <div class="student-info">
+
+                <span>
+                    STU-1001
+                </span>
+
+                <span>
+                    2nd Year
+                </span>
+
+            </div>
+
+
+            <div class="card-buttons">
+
+                <button
+                    class="edit"
+                    onclick="editStudent('Arun Kumar')"
+                >
+                    ✎ Edit
+                </button>
+
+                <button
+                    class="delete"
+                    onclick="deleteStudent(this)"
+                >
+                    🗑 Delete
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STUDENT 2 -->
+
+        <div
+            class="student-card"
+            data-name="Rahul Kumar"
+            data-email="rahul@example.com"
+            data-department="ECE"
+            data-year="3"
+        >
+
+            <div class="student-top">
+
+                <div class="student-avatar">
+                    RK
+                </div>
+
+                <span class="department">
+                    ECE
+                </span>
+
+            </div>
+
+
+            <h3>
+                Rahul Kumar
+            </h3>
+
+            <p>
+                rahul@example.com
+            </p>
+
+
+            <div class="student-info">
+
+                <span>
+                    STU-1002
+                </span>
+
+                <span>
+                    3rd Year
+                </span>
+
+            </div>
+
+
+            <div class="card-buttons">
+
+                <button
+                    class="edit"
+                    onclick="editStudent('Rahul Kumar')"
+                >
+                    ✎ Edit
+                </button>
+
+                <button
+                    class="delete"
+                    onclick="deleteStudent(this)"
+                >
+                    🗑 Delete
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STUDENT 3 -->
+
+        <div
+            class="student-card"
+            data-name="Priya Sharma"
+            data-email="priya@example.com"
+            data-department="CSE"
+            data-year="1"
+        >
+
+            <div class="student-top">
+
+                <div class="student-avatar">
+                    PS
+                </div>
+
+                <span class="department">
+                    CSE
+                </span>
+
+            </div>
+
+
+            <h3>
+                Priya Sharma
+            </h3>
+
+            <p>
+                priya@example.com
+            </p>
+
+
+            <div class="student-info">
+
+                <span>
+                    STU-1003
+                </span>
+
+                <span>
+                    1st Year
+                </span>
+
+            </div>
+
+
+            <div class="card-buttons">
+
+                <button
+                    class="edit"
+                    onclick="editStudent('Priya Sharma')"
+                >
+                    ✎ Edit
+                </button>
+
+                <button
+                    class="delete"
+                    onclick="deleteStudent(this)"
+                >
+                    🗑 Delete
+                </button>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ADD STUDENT -->
+
+<section
+    class="content"
+    id="addStudent"
+>
+
+
+    <div class="section-header">
+
+        <div>
+
+            <p class="small-title">
+                QUICK ACTION
+            </p>
+
+            <h2>
+                Add New Student
+            </h2>
+
+        </div>
+
+
+        <span class="crud-badge">
+            CRUD ENABLED
+        </span>
+
+    </div>
+
+
+    <form id="studentForm">
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    Student Name
+                </label>
+
+                <input
+                    type="text"
+                    placeholder="Enter student name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    placeholder="student@example.com"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Department
+                </label>
+
+                <select required>
+
+                    <option value="">
+                        Choose department
+                    </option>
+
+                    <option>
+                        CSE
+                    </option>
+
+                    <option>
+                        ECE
+                    </option>
+
+                    <option>
+                        EEE
+                    </option>
+
+                    <option>
+                        IT
+                    </option>
+
+                    <option>
+                        MECH
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Academic Year
+                </label>
+
+                <select required>
+
+                    <option value="">
+                        Choose year
+                    </option>
+
+                    <option>
+                        1st Year
+                    </option>
+
+                    <option>
+                        2nd Year
+                    </option>
+
+                    <option>
+                        3rd Year
+                    </option>
+
+                    <option>
+                        4th Year
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-buttons">
+
+            <button
+                type="submit"
+                class="primary-button"
+            >
+                ＋ Add Student
+            </button>
+
+
+            <button
+                type="reset"
+                class="cancel-button"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+
+<footer>
+
+    StudentHub · CRUD Mini Web Application
+
+</footer>
+
+
+</main>
+
+</div>
+
+
+
+<script>
+
+/* ===========================
+   SEARCH
+=========================== */
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+const cards =
+    document.querySelectorAll(
+        ".student-card"
+    );
+
+
+searchInput.addEventListener(
+    "input",
+    filterStudents
+);
+
+
+function filterStudents() {
+
+    const text =
+        searchInput.value
+        .toLowerCase();
+
+
+    const department =
+        document.getElementById(
+            "departmentFilter"
+        ).value;
+
+
+    const year =
+        document.getElementById(
+            "yearFilter"
+        ).value;
+
+
+    cards.forEach(card => {
+
+        const name =
+            card.dataset.name
+            .toLowerCase();
+
+        const email =
+            card.dataset.email
+            .toLowerCase();
+
+        const dept =
+            card.dataset.department;
+
+        const studentYear =
+            card.dataset.year;
+
+
+        const searchMatch =
+            name.includes(text) ||
+            email.includes(text);
+
+
+        const deptMatch =
+            department === "" ||
+            department === dept;
+
+
+        const yearMatch =
+            year === "" ||
+            year === studentYear;
+
+
+        if (
+            searchMatch &&
+            deptMatch &&
+            yearMatch
+        ) {
+
+            card.style.display =
+                "block";
+
+        } else {
+
+            card.style.display =
+                "none";
+
+        }
+
+    });
+
+}
+
+
+document
+    .getElementById(
+        "departmentFilter"
+    )
+    .addEventListener(
+        "change",
+        filterStudents
+    );
+
+
+document
+    .getElementById(
+        "yearFilter"
+    )
+    .addEventListener(
+        "change",
+        filterStudents
+    );
+
+
+/* ===========================
+   DELETE
+=========================== */
+
+function deleteStudent(button) {
+
+    const card =
+        button.closest(
+            ".student-card"
+        );
+
+
+    const name =
+        card.querySelector(
+            "h3"
+        ).textContent;
+
+
+    const result =
+        confirm(
+            "Delete " +
+            name +
+            "?"
+        );
+
+
+    if (result) {
+
+        card.remove();
+
+        updateCount();
+
+        showMessage(
+            "Student deleted successfully!"
+        );
+
+    }
+
+}
+
+
+/* ===========================
+   EDIT
+=========================== */
+
+function editStudent(name) {
+
+    showMessage(
+        "Edit mode opened for " +
+        name
+    );
+
+}
+
+
+/* ===========================
+   ADD STUDENT
+=========================== */
+
+document
+    .getElementById(
+        "studentForm"
+    )
+    .addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+            showMessage(
+                "Student added successfully!"
+            );
+
+            this.reset();
+
+        }
+    );
+
+
+/* ===========================
+   UPDATE COUNT
+=========================== */
+
+function updateCount() {
+
+    const count =
+        document.querySelectorAll(
+            ".student-card"
+        ).length;
+
+
+    document.getElementById(
+        "totalStudents"
+    ).textContent = count;
+
+
+    document.getElementById(
+        "activeStudents"
+    ).textContent = count;
+
+}
+
+
+/* ===========================
+   SCROLL
+=========================== */
+
+function scrollToAdd() {
+
+    document
+        .getElementById(
+            "addStudent"
+        )
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* ===========================
+   MESSAGE
+=========================== */
+
+function showMessage(text) {
+
+    const message =
+        document.createElement(
+            "div"
+        );
+
+
+    message.textContent =
+        text;
+
+
+    message.style.position =
+        "fixed";
+
+    message.style.right =
+        "25px";
+
+    message.style.bottom =
+        "25px";
+
+    message.style.padding =
+        "13px 20px";
+
+    message.style.background =
+        "#171b27";
+
+    message.style.color =
+        "white";
+
+    message.style.borderRadius =
+        "10px";
+
+    message.style.fontSize =
+        "11px";
+
+    message.style.zIndex =
+        "9999";
+
+
+    document.body.appendChild(
+        message
+    );
+
+
+    setTimeout(
+        () => message.remove(),
+        2500
+    );
+
+}
+
+
+/* ===========================
+   THEME
+=========================== */
+
+function changeTheme() {
+
+    document.body.style.background =
+        document.body.style.background ===
+        "rgb(25, 27, 36)"
+        ? "#f4f6fb"
+        : "#191b24";
+
+}
+
+</script>
+
 </body>
 </html>
+```
