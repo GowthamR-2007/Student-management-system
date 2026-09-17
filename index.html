@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudentHub — Student Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">S</div>
+        <div>
+          <strong>StudentHub</strong>
+          <span>Campus workspace</span>
+        </div>
+      </div>
+
+      <nav>
+        <p class="nav-label">Workspace</p>
+        <a class="nav-item active" href="#dashboard"><span>⌂</span> Dashboard</a>
+        <a class="nav-item" href="#students"><span>◉</span> Students</a>
+        <a class="nav-item" href="#add"><span>＋</span> Add Student</a>
+        <a class="nav-item" href="#analytics"><span>▥</span> Analytics</a>
+        <p class="nav-label">System</p>
+        <a class="nav-item" href="#settings"><span>⚙</span> Settings</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="mini-profile"><span>GR</span><div><b>Gowtham R</b><small>CSE Student</small></div></div>
+        <button class="theme-btn" id="themeBtn" title="Toggle theme">☼ <span>Theme</span></button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu">☰</button>
+        <div>
+          <p class="eyebrow">STUDENT MANAGEMENT</p>
+          <h1 id="dashboard">Good evening, Gowtham <span>✦</span></h1>
+        </div>
+        <div class="top-actions">
+          <div class="global-search"><span>⌕</span><input id="search" type="search" placeholder="Search students..."><kbd>⌘ K</kbd></div>
+          <button class="icon-btn" title="Notifications">♢<i></i></button>
+          <div class="top-avatar">GR</div>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div>
+          <span class="pill">● Live database</span>
+          <h2>Your campus, organized.</h2>
+          <p>Manage student records with a clean, fast and modern workspace.</p>
+        </div>
+        <button class="gradient-btn" id="heroAdd">＋ Add Student</button>
+      </section>
+
+      <section class="stats" id="analytics">
+        <div class="stat-card">
+          <div class="stat-icon">◉</div><div><span>Total Students</span><strong id="totalCount">0</strong><small>All records</small></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⌘</div><div><span>CSE Students</span><strong id="cseCount">0</strong><small>Computer Science</small></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">↗</div><div><span>Active Records</span><strong id="activeCount">0</strong><small>Currently enrolled</small></div>
+        </div>
+        <div class="stat-card accent-card">
+          <div><span>Departments</span><strong id="deptCount">0</strong><small>Across your database</small></div>
+          <div class="ring"></div>
+        </div>
+      </section>
+
+      <section class="content-card" id="students">
+        <div class="section-head">
+          <div><p class="eyebrow">DIRECTORY</p><h2>Student Records</h2></div>
+          <div class="filters">
+            <select id="departmentFilter"><option value="">All departments</option><option>CSE</option><option>ECE</option><option>EEE</option><option>MECH</option><option>CIVIL</option><option>IT</option></select>
+            <select id="yearFilter"><option value="">All years</option><option value="1">1st Year</option><option value="2">2nd Year</option><option value="3">3rd Year</option><option value="4">4th Year</option></select>
+          </div>
+        </div>
+        <div class="student-grid" id="studentGrid"></div>
+      </section>
+
+      <section class="content-card add-section" id="add">
+        <div class="section-head">
+          <div><p class="eyebrow">QUICK ACTION</p><h2 id="formTitle">Add New Student</h2></div>
+          <span class="form-badge">CRUD enabled</span>
+        </div>
+        <form id="studentForm">
+          <input type="hidden" id="studentId">
+          <div class="form-grid">
+            <label>Student Name<input id="name" type="text" placeholder="e.g. Arun Kumar" required></label>
+            <label>Email Address<input id="email" type="email" placeholder="student@example.com" required></label>
+            <label>Department<select id="department" required><option value="">Choose department</option><option>CSE</option><option>ECE</option><option>EEE</option><option>MECH</option><option>CIVIL</option><option>IT</option></select></label>
+            <label>Academic Year<select id="year" required><option value="">Choose year</option><option value="1">1st Year</option><option value="2">2nd Year</option><option value="3">3rd Year</option><option value="4">4th Year</option></select></label>
+          </div>
+          <div class="form-actions"><button class="gradient-btn" type="submit" id="saveBtn">＋ Add Student</button><button class="ghost-btn hidden" type="button" id="cancelBtn">Cancel</button></div>
+        </form>
+      </section>
+
+      <footer>StudentHub · CRUD Mini Web Application · Built with Flask + SQLite</footer>
+    </main>
+  </div>
+
+  <div class="modal hidden" id="deleteModal">
+    <div class="modal-box"><button class="close" id="closeModal">×</button><div class="warning-icon">!</div><h3>Delete student?</h3><p>This action will permanently remove the selected record.</p><div class="modal-actions"><button class="ghost-btn" id="keepBtn">Keep record</button><button class="delete-btn" id="confirmDelete">Delete</button></div></div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
